@@ -7,7 +7,8 @@ class Process:
         self.pos = pos #Process Identifier
         self.bt = bt #Burst Time
         self.at = at #Arrival Time
-
+        self.TaT = None
+        self.wt = None
         Process.allProcess.append(self) #Adding each process to the list
 
         #Adding process to the right AT Map
@@ -33,6 +34,9 @@ def ProcessListMaker(N):
 def FCFS_cpu():
     gantt="\nGantt:  (0)|" #Gantt Chart string form with initial 0 time
 
+    aTAT=0 # avg Turn-Around-Time
+    aWT=0 # avg Waiting Time
+
     time=0 #CPU Clock
     restTime=0 #A timer to count how long the CPU has remained idle, for Gantt generation
 
@@ -56,17 +60,30 @@ def FCFS_cpu():
 
                 terminated.add(i)
                 time+=i.bt
+
+                #Calculate TAT and WT for each process
+                i.TaT=time-i.at
+                aTAT+=i.TaT
+                i.wt= i.TaT-i.bt
+                aWT+=i.wt
+
                 gantt+=f" {i} ({time})|"
 
         #If no work was done, then forwards clock by 1s and also increases the idle counter
         if not workDone:
             time+=1
             restTime+=1
-    
-    return gantt+"\n"
+
+    #Averaging the TAT & WT
+    aTAT = aTAT / len(terminated)
+    aWT = aWT / len(terminated)
+
+
+    print(gantt)
+    print("ATAT: "+str(aTAT),"\n", "AWT: "+str(aWT))
 
 
 if __name__ == "__main__":
     
     ProcessListMaker(4)
-    print(FCFS_cpu())
+    FCFS_cpu()
