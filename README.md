@@ -11,4 +11,5 @@ Also, ATAT & AWT are calculated for the CPU Simulation
 
 Currently implemented:
 1. First-Come First-Serve Algorithm
+2. Shortest Job First Algorithm
 
