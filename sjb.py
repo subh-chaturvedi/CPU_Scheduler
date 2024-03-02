@@ -22,7 +22,7 @@ class Process:
     def __str__(self):
         return f"P{self.pos}"
     
-    # Comparison methods for process class
+    # Comparison methods for process class on basis of Burst Time
     def __lt__(self, other):
         return self.bt < other.bt
     def __eq__(self, other):
